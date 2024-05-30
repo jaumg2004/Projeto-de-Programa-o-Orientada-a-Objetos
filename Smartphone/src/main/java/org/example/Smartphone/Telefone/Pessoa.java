@@ -1,48 +1,52 @@
 package org.example.Smartphone.Telefone;
 
-public class Pessoa{
+public class Pessoa {
     private String nome;
     private String numero;
-    private Chamada chamadas;
-    private String eMail;
+    private String email;
+    private int chamadasIdChamadas;
 
-    public Pessoa(String nome, String numero, Chamada chamadas, String eMail) {
+    public Pessoa(String nome, String numero, String email, int chamadasIdChamadas) {
         this.nome = nome;
         this.numero = numero;
-        this.chamadas = chamadas;
-        this.eMail = eMail;
+        this.email = email;
+        this.chamadasIdChamadas = chamadasIdChamadas;
     }
 
+    // Getters
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getNumero() {
         return numero;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public int getChamadasIdChamadas() {
+        return chamadasIdChamadas;
+    }
+
+    // Setters
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public void setNumero(String numero) {
         this.numero = numero;
     }
 
-    public Chamada getChamadas() {
-        return chamadas;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setChamadas(Chamada chamadas) {
-        this.chamadas = chamadas;
+    public void setChamadasIdChamadas(int chamadasIdChamadas) {
+        this.chamadasIdChamadas = chamadasIdChamadas;
     }
 
-    public String geteMail() {
-        return eMail;
-    }
-
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
-    }
 }
+
 
