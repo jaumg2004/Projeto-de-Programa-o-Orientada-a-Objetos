@@ -1,18 +1,22 @@
 package org.example.DAO;
-import java.util.Timestamp;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.sql.*;
 
-public class GoogleDAO extends ConnectionDAO{
+public class GoogleDAO extends ConnectionDAO {
 
     // INSERT na tabela Historico
-    public boolean insertHistorico(String site, String url, Timestamp horarioAcesso) {
+    public boolean insertHistorico(String site, String url, LocalDateTime horarioAcesso) {
         connectToDB();
         String sql = "INSERT INTO sakila.Historico (Site, URL, `Horario de acesso`) VALUES (?, ?, ?)";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setString(1, site);
             pst.setString(2, url);
-            pst.setTimestamp(3, horarioAcesso);
+            pst.setTimestamp(3, Timestamp.valueOf(horarioAcesso));
             pst.execute();
             sucesso = true;
         } catch (SQLException ex) {
@@ -20,8 +24,8 @@ public class GoogleDAO extends ConnectionDAO{
             sucesso = false;
         } finally {
             try {
-                con.close();
                 pst.close();
+                con.close();
             } catch (SQLException ex) {
                 System.out.println("Erro: " + ex.getMessage());
             }
@@ -30,12 +34,13 @@ public class GoogleDAO extends ConnectionDAO{
     }
 
     // UPDATE na tabela Historico
-    public boolean updateHistorico(String site, Timestamp novoHorarioAcesso) {
+    public boolean updateHistorico(String site, LocalDateTime novoHorarioAcesso) {
         connectToDB();
         String sql = "UPDATE Historico SET `Horario de acesso` = ? WHERE Site = ?";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
-            pst.setTimestamp(1, novoHorarioAcesso);  // Correct assignment of Timestamp
+            pst.setTimestamp(1, Timestamp.valueOf(novoHorarioAcesso));
             pst.setString(2, site);
             pst.execute();
             sucesso = true;
@@ -44,8 +49,8 @@ public class GoogleDAO extends ConnectionDAO{
             sucesso = false;
         } finally {
             try {
-                con.close();
                 pst.close();
+                con.close();
             } catch (SQLException ex) {
                 System.out.println("Erro: " + ex.getMessage());
             }
@@ -57,6 +62,7 @@ public class GoogleDAO extends ConnectionDAO{
     public boolean deleteHistorico(String site) {
         connectToDB();
         String sql = "DELETE FROM sakila.Historico WHERE Site = ?";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setString(1, site);
@@ -67,8 +73,8 @@ public class GoogleDAO extends ConnectionDAO{
             sucesso = false;
         } finally {
             try {
-                con.close();
                 pst.close();
+                con.close();
             } catch (SQLException ex) {
                 System.out.println("Erro: " + ex.getMessage());
             }
@@ -81,6 +87,7 @@ public class GoogleDAO extends ConnectionDAO{
         ArrayList<String[]> historicos = new ArrayList<>();
         connectToDB();
         String sql = "SELECT * FROM sakila.Historico";
+        boolean sucesso;
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
@@ -88,7 +95,7 @@ public class GoogleDAO extends ConnectionDAO{
                 String[] historico = new String[3];
                 historico[0] = rs.getString("Site");
                 historico[1] = rs.getString("URL");
-                historico[2] = rs.getTimestamp("Horario de acesso").toString();
+                historico[2] = rs.getTimestamp("Horario de acesso").toLocalDateTime().toString();
                 historicos.add(historico);
             }
             sucesso = true;
@@ -97,14 +104,13 @@ public class GoogleDAO extends ConnectionDAO{
             sucesso = false;
         } finally {
             try {
-                con.close();
+                rs.close();
                 st.close();
+                con.close();
             } catch (SQLException ex) {
                 System.out.println("Erro: " + ex.getMessage());
             }
         }
         return historicos;
     }
-
 }
-
