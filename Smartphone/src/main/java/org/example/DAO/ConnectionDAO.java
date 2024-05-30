@@ -23,7 +23,7 @@ public abstract class ConnectionDAO {
         }
     }
 
-    protected void closeConnection() {
+    protected void closeConnections() {
         try {
             if (rs != null) {
                 rs.close();

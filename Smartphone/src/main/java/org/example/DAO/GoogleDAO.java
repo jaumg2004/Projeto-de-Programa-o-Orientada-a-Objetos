@@ -1,5 +1,7 @@
 package org.example.DAO;
 
+import org.example.Smartphone.Google.Historico;
+
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -8,15 +10,15 @@ import java.sql.*;
 public class GoogleDAO extends ConnectionDAO {
 
     // INSERT na tabela Historico
-    public boolean insertHistorico(String site, String url, LocalDateTime horarioAcesso) {
+    public boolean insertHistorico(Historico historico) {
         connectToDB();
         String sql = "INSERT INTO sakila.Historico (Site, URL, `Horario de acesso`) VALUES (?, ?, ?)";
         boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, site);
-            pst.setString(2, url);
-            pst.setTimestamp(3, Timestamp.valueOf(horarioAcesso));
+            pst.setString(1, historico.getSite());
+            pst.setString(2, historico.getUrl());
+            pst.setTimestamp(3, Timestamp.valueOf(historico.getHorarioDeAcesso()));
             pst.execute();
             sucesso = true;
         } catch (SQLException ex) {
@@ -83,33 +85,25 @@ public class GoogleDAO extends ConnectionDAO {
     }
 
     // SELECT na tabela Historico
-    public ArrayList<String[]> selectHistorico() {
-        ArrayList<String[]> historicos = new ArrayList<>();
+    public ArrayList<Historico> selectHistorico() {
+        ArrayList<Historico> historicos = new ArrayList<>();
         connectToDB();
         String sql = "SELECT * FROM sakila.Historico";
-        boolean sucesso;
         try {
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                String[] historico = new String[3];
-                historico[0] = rs.getString("Site");
-                historico[1] = rs.getString("URL");
-                historico[2] = rs.getTimestamp("Horario de acesso").toLocalDateTime().toString();
+                String site = rs.getString("Site");
+                String url = rs.getString("URL");
+                Timestamp timestamp = rs.getTimestamp("Horario de acesso");
+                LocalDateTime horarioAcesso = timestamp.toLocalDateTime();
+                Historico historico = new Historico(site, url, horarioAcesso);
                 historicos.add(historico);
             }
-            sucesso = true;
         } catch (SQLException ex) {
             System.out.println("Erro: " + ex.getMessage());
-            sucesso = false;
         } finally {
-            try {
-                rs.close();
-                st.close();
-                con.close();
-            } catch (SQLException ex) {
-                System.out.println("Erro: " + ex.getMessage());
-            }
+            closeConnections();
         }
         return historicos;
     }

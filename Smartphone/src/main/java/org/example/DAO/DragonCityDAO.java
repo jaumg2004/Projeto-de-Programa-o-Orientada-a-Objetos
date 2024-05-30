@@ -1,13 +1,18 @@
 package org.example.DAO;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DragonCityDAO extends ConnectionDAO {
 
     // INSERT na tabela Dragon City
-    public boolean insertDragonCity(int idDragonCity, String username, String senha) {
+    public boolean insertDragonCity(String username, String senha) {
         connectToDB();
+        Random random = new Random();
+        int idDragonCity = random.nextInt()*10000000;
+        System.out.println("Id da conta: "+idDragonCity);
         String sql = "INSERT INTO sakila.`Dragon City` (idDragonCity, Username, Senha) VALUES (?, ?, ?)";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, idDragonCity);
@@ -33,6 +38,7 @@ public class DragonCityDAO extends ConnectionDAO {
     public boolean updateDragonCity(int idDragonCity, String newUsername, String newSenha) {
         connectToDB();
         String sql = "UPDATE sakila.`Dragon City` SET Username = ?, Senha = ? WHERE idDragonCity = ?";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setString(1, newUsername);
@@ -58,6 +64,7 @@ public class DragonCityDAO extends ConnectionDAO {
     public boolean deleteDragonCity(int idDragonCity) {
         connectToDB();
         String sql = "DELETE FROM sakila.`Dragon City` WHERE idDragonCity = ?";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, idDragonCity);
@@ -78,10 +85,11 @@ public class DragonCityDAO extends ConnectionDAO {
     }
 
     // SELECT na tabela Dragon City
-    public ArrayList<String[]> selectDragonCity() {
+    public ArrayList<String[]> selectDragonCities() {
         ArrayList<String[]> dragonCityEntries = new ArrayList<>();
         connectToDB();
         String sql = "SELECT * FROM sakila.`Dragon City`";
+        boolean sucesso;
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
@@ -108,9 +116,13 @@ public class DragonCityDAO extends ConnectionDAO {
     }
 
     // INSERT na tabela Ilhas
-    public boolean insertIlha(int idIlha, String nomeIlha, int dragonCityId) {
+    public boolean insertIlha(String nomeIlha, int dragonCityId) {
         connectToDB();
+        Random random = new Random();
+        int idIlha = random.nextInt()*10000000;
+        System.out.println("Id da ilha: "+idIlha);
         String sql = "INSERT INTO sakila.Ilhas (idIlhas, `Nome da ilha`, `Dragon City_idDragon City`) VALUES (?, ?, ?)";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, idIlha);
@@ -136,6 +148,7 @@ public class DragonCityDAO extends ConnectionDAO {
     public boolean deleteIlha(int idIlha) {
         connectToDB();
         String sql = "DELETE FROM sakila.Ilhas WHERE idIlhas = ?";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, idIlha);
@@ -160,6 +173,7 @@ public class DragonCityDAO extends ConnectionDAO {
         ArrayList<String[]> ilhas = new ArrayList<>();
         connectToDB();
         String sql = "SELECT * FROM sakila.Ilhas";
+        boolean sucesso;
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
@@ -189,6 +203,7 @@ public class DragonCityDAO extends ConnectionDAO {
     public boolean insertTipo(String tipo) {
         connectToDB();
         String sql = "INSERT INTO sakila.Tipo (Tipo) VALUES (?)";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setString(1, tipo);
@@ -208,34 +223,13 @@ public class DragonCityDAO extends ConnectionDAO {
         return sucesso;
     }
 
-    // DELETE na tabela Tipo
-    public boolean deleteTipo(String tipo) {
-        connectToDB();
-        String sql = "DELETE FROM sakila.Tipo WHERE Tipo = ?";
-        try {
-            pst = con.prepareStatement(sql);
-            pst.setString(1, tipo);
-            pst.execute();
-            sucesso = true;
-        } catch (SQLException ex) {
-            System.out.println("Erro: " + ex.getMessage());
-            sucesso = false;
-        } finally {
-            try {
-                con.close();
-                pst.close();
-            } catch (SQLException ex) {
-                System.out.println("Erro: " + ex.getMessage());
-            }
-        }
-        return sucesso;
-    }
 
     // SELECT na tabela Tipo
     public ArrayList<String> selectTipo() {
         ArrayList<String> tipos = new ArrayList<>();
         connectToDB();
         String sql = "SELECT * FROM sakila.Tipo";
+        boolean sucesso;
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
@@ -258,9 +252,13 @@ public class DragonCityDAO extends ConnectionDAO {
     }
 
     // INSERT na tabela Dragões
-    public boolean insertDragao(int idDragoes, String nome, String especie, Integer nivel, int habitatIdHabitat) {
+    public boolean insertDragao(String nome, String especie, Integer nivel, int habitatIdHabitat) {
         connectToDB();
+        Random random = new Random();
+        int idDragoes = random.nextInt()*10000000;
+        System.out.println("Id da ilha: "+idDragoes);
         String sql = "INSERT INTO sakila.Dragões (idDragões, Nome, Espécie, Nível, Habitat_idHabitat) VALUES (?, ?, ?, ?, ?)";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, idDragoes);
@@ -288,6 +286,7 @@ public class DragonCityDAO extends ConnectionDAO {
     public boolean updateDragao(int idDragoes, String novoNome) {
         connectToDB();
         String sql = "UPDATE sakila.Dragões SET Nome = ? WHERE idDragões = ?";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setString(1, novoNome);
@@ -312,6 +311,7 @@ public class DragonCityDAO extends ConnectionDAO {
     public boolean deleteDragao(int idDragoes) {
         connectToDB();
         String sql = "DELETE FROM sakila.Dragões WHERE idDragões = ?";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, idDragoes);
@@ -346,9 +346,13 @@ public class DragonCityDAO extends ConnectionDAO {
     }
 
     // INSERT na tabela Habitat
-    public boolean insertHabitat(int idHabitat, int quantDragoes, int ilhasIdIlhas, String tipoTipo) {
+    public boolean insertHabitat(int quantDragoes, int ilhasIdIlhas, String tipoTipo) {
         connectToDB();
+        Random random = new Random();
+        int idHabitat = random.nextInt()*10000000;
+        System.out.println("Id da ilha: "+idHabitat);
         String sql = "INSERT INTO sakila.Habitat (idHabitat, QuantDragoes, Ilhas_idIlhas, Tipo_Tipo) VALUES (?, ?, ?, ?)";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, idHabitat);
@@ -375,6 +379,7 @@ public class DragonCityDAO extends ConnectionDAO {
     public boolean updateHabitat(int idHabitat, int newQuantDragoes) {
         connectToDB();
         String sql = "UPDATE sakila.Habitat SET QuantDragoes = ? WHERE idHabitat = ?";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, newQuantDragoes);
@@ -399,6 +404,7 @@ public class DragonCityDAO extends ConnectionDAO {
     public boolean deleteHabitat(int idHabitat) {
         connectToDB();
         String sql = "DELETE FROM sakila.Habitat WHERE idHabitat = ?";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, idHabitat);
@@ -423,6 +429,7 @@ public class DragonCityDAO extends ConnectionDAO {
         ArrayList<String[]> habitats = new ArrayList<>();
         connectToDB();
         String sql = "SELECT * FROM sakila.Habitat";
+        boolean sucesso;
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
@@ -450,12 +457,13 @@ public class DragonCityDAO extends ConnectionDAO {
     }
 
     // INSERT into Tipo_has_Dragões table
-    public boolean insertTipoDragao(int idDragao, String tipo) {
+    public boolean insertTipoDragao(String nomeDragao, String tipo) {
         connectToDB();
-        String sql = "INSERT INTO sakila.Tipo_has_Dragões (Dragões_idDragões, Tipo_Tipo) VALUES (?, ?)";
+        String sql = "INSERT INTO sakila.Tipo_has_Dragões (Dragões_nomeDragões, Tipo_Tipo) VALUES (?, ?)";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
-            pst.setInt(1, idDragao);
+            pst.setString(1, nomeDragao);
             pst.setString(2, tipo);
             pst.execute();
             sucesso = true;
@@ -477,6 +485,7 @@ public class DragonCityDAO extends ConnectionDAO {
     public boolean deleteTipoDragao(int idDragao, String tipo) {
         connectToDB();
         String sql = "DELETE FROM sakila.Tipo_has_Dragões WHERE Dragões_idDragões = ? AND Tipo_Tipo = ?";
+        boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, idDragao);
@@ -502,6 +511,7 @@ public class DragonCityDAO extends ConnectionDAO {
         ArrayList<String[]> tipoDragoes = new ArrayList<>();
         connectToDB();
         String sql = "SELECT * FROM sakila.Tipo_has_Dragões";
+        boolean sucesso;
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);

@@ -45,4 +45,3 @@ public class Habitat {
         this.tipoIdTipo = tipoIdTipo;
     }
 }
-
