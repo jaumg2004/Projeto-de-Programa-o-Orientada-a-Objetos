@@ -21,11 +21,12 @@ USE `sakila` ;
 -- Table `sakila`.`Chamadas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sakila`.`Chamadas` (
-  `idChamadas` INT NOT NULL,
-  `Horários` DATETIME NULL,
-  `Quantidade de ligações` INT NULL,
-  PRIMARY KEY (`idChamadas`))
-ENGINE = InnoDB;
+  `idChamadas` INT NOT NULL AUTO_INCREMENT,
+  `Horarios` DATETIME NULL,
+  `Quantidade_de_ligacoes` INT NULL,
+  PRIMARY KEY (`idChamadas`)
+) ENGINE=InnoDB;
+
 
 
 -- -----------------------------------------------------
