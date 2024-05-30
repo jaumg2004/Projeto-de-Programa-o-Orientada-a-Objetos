@@ -1,13 +1,12 @@
 package org.example.Smartphone.Telefone;
 
-public class Pessoa extends Telefone {
+public class Pessoa{
     private String nome;
     private String numero;
-    private Chamadas chamadas;
+    private Chamada chamadas;
     private String eMail;
 
-    public Pessoa(int idTelefone, Smartphone smartphone, String nome, String numero, Chamadas chamadas, String eMail) {
-        super(idTelefone, smartphone);
+    public Pessoa(String nome, String numero, Chamada chamadas, String eMail) {
         this.nome = nome;
         this.numero = numero;
         this.chamadas = chamadas;
@@ -30,21 +29,20 @@ public class Pessoa extends Telefone {
         this.numero = numero;
     }
 
-    public Chamadas getChamadas() {
+    public Chamada getChamadas() {
         return chamadas;
     }
 
-    public void setChamadas(Chamadas chamadas) {
+    public void setChamadas(Chamada chamadas) {
         this.chamadas = chamadas;
     }
 
-    public String getEMail() {
+    public String geteMail() {
         return eMail;
     }
 
-    public void setEMail(String eMail) {
+    public void seteMail(String eMail) {
         this.eMail = eMail;
     }
 }
-
 
