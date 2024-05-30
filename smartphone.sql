@@ -128,7 +128,7 @@ ENGINE = InnoDB;
 -- Table `sakila`.`Dragon City`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sakila`.`Dragon City` (
-  `idDragon City` INT NOT NULL,
+  `idDragon City` INT NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(45) NULL,
   `Senha` VARCHAR(45) NULL,
   PRIMARY KEY (`idDragon City`))
@@ -208,14 +208,14 @@ ENGINE = InnoDB;
 -- Table `sakila`.`Tipo_has_Dragões`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sakila`.`Tipo_has_Dragões` (
-  `Dragões_idDragões` INT NOT NULL,
+  `Dragões_nomeDragões` INT NOT NULL,
   `Tipo_Tipo` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Dragões_idDragões`, `Tipo_Tipo`),
+  PRIMARY KEY (`Dragões_nomeDragões`, `Tipo_Tipo`),
   INDEX `fk_Tipo_has_Dragões_Dragões1_idx` (`Dragões_idDragões` ASC),
   INDEX `fk_Tipo_has_Dragões_Tipo1_idx` (`Tipo_Tipo` ASC),
   CONSTRAINT `fk_Tipo_has_Dragões_Dragões1`
-    FOREIGN KEY (`Dragões_idDragões`)
-    REFERENCES `sakila`.`Dragões` (`idDragões`)
+    FOREIGN KEY (`Dragões_nomeDragões`)
+    REFERENCES `sakila`.`Dragões` (`Nome`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Tipo_has_Dragões_Tipo1`
