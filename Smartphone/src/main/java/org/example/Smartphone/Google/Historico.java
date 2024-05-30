@@ -1,12 +1,12 @@
 package org.example.Smartphone.Google;
-import java.time.Date;
+import java.time.Datetime;
 
 public class Historico {
     private String site;
     private String url;
-    private Date horarioDeAcesso;
+    private Datetime horarioDeAcesso;
 
-    public Historico(String site, String url, Date horarioDeAcesso) {
+    public Historico(String site, String url, Datetime horarioDeAcesso) {
         this.site = site;
         this.url = url;
         this.horarioDeAcesso = horarioDeAcesso;
@@ -28,11 +28,11 @@ public class Historico {
         this.url = url;
     }
 
-    public Date getHorarioDeAcesso() {
+    public Datetime getHorarioDeAcesso() {
         return horarioDeAcesso;
     }
 
-    public void setHorarioDeAcesso(Date horarioDeAcesso) {
+    public void setHorarioDeAcesso(Datetime horarioDeAcesso) {
         this.horarioDeAcesso = horarioDeAcesso;
     }
 
