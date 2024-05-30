@@ -1,7 +1,5 @@
 package org.example.Smartphone.DragonCity;
 
-import org.example.DAO.ConnectionDAO;
-
 public class TipoHasDragoes {
 
     private String tipo;
