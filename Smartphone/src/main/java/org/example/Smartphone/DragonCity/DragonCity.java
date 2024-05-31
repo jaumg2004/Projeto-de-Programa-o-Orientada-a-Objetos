@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class DragonCity {
     public static void criarNovaConta(Scanner scanner, DragonCityDAO dragonCityDAO) {
-        Random random = new Random();
         System.out.println("Digite o nome de usuário:");
         String username = scanner.next();
         System.out.println("Digite a senha:");
@@ -151,7 +150,7 @@ public class DragonCity {
     public static void listarAssociacoesTipoDragao(DragonCityDAO dragonCityDAO) {
         ArrayList<String[]> tipoDragoes = dragonCityDAO.selectTipoDragao();
         for (String[] tipoDragao : tipoDragoes) {
-            System.out.println("Nome do Dragão: " + tipoDragao[0] + ", Tipo: " + tipoDragao[0]);
+            System.out.println("Nome do Dragão: " + tipoDragao[0] + ", Tipo: " + tipoDragao[1]);
         }
     }
 

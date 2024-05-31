@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Spotify {
-    private static void inserirMusica(Scanner scanner, SpotifyDAO spotifyDAO) {
+    public static void inserirMusica(Scanner scanner, SpotifyDAO spotifyDAO) {
         System.out.println("Insira o nome da música:");
         String nomeMusica = scanner.next();
         System.out.println("Insira o nome do artista:");
@@ -24,7 +24,7 @@ public class Spotify {
         }
     }
 
-    private static void atualizarReproducaoMusica(Scanner scanner, SpotifyDAO spotifyDAO) {
+    public static void atualizarReproducaoMusica(Scanner scanner, SpotifyDAO spotifyDAO) {
         System.out.println("Insira o nome da música que deseja atualizar:");
         String nomeMusicaAtualizar = scanner.next();
         System.out.println("Insira o novo número de reproduções:");
@@ -37,7 +37,7 @@ public class Spotify {
         }
     }
 
-    private static void excluirMusica(Scanner scanner, SpotifyDAO spotifyDAO) {
+    public static void excluirMusica(Scanner scanner, SpotifyDAO spotifyDAO) {
         System.out.println("Insira o nome da música que deseja excluir:");
         String nomeMusicaExcluir = scanner.next();
         boolean excluirSucesso = spotifyDAO.deleteMusica(nomeMusicaExcluir);
@@ -48,7 +48,7 @@ public class Spotify {
         }
     }
 
-    private static void listarMusicas(SpotifyDAO spotifyDAO) {
+    public static void listarMusicas(SpotifyDAO spotifyDAO) {
         ArrayList<Musica> musicas = spotifyDAO.selectMusica();
         System.out.println("Lista de músicas:");
         for (Musica m : musicas) {
@@ -56,7 +56,7 @@ public class Spotify {
         }
     }
 
-    private static void criarPlaylist(Scanner scanner, SpotifyDAO spotifyDAO) {
+    public static void criarPlaylist(Scanner scanner, SpotifyDAO spotifyDAO) {
         System.out.println("Insira o título da playlist:");
         String tituloPlaylist = scanner.next();
         System.out.println("Insira a quantidade de músicas na playlist:");
@@ -70,7 +70,7 @@ public class Spotify {
         }
     }
 
-    private static void excluirPlaylist(Scanner scanner, SpotifyDAO spotifyDAO) {
+    public static void excluirPlaylist(Scanner scanner, SpotifyDAO spotifyDAO) {
         System.out.println("Insira o título da playlist que deseja excluir:");
         String tituloPlaylistExcluir = scanner.next();
         boolean excluirPlaylistSucesso = spotifyDAO.deletePlaylist(tituloPlaylistExcluir);
@@ -81,7 +81,7 @@ public class Spotify {
         }
     }
 
-    private static void listarPlaylists(SpotifyDAO spotifyDAO) {
+    public static void listarPlaylists(SpotifyDAO spotifyDAO) {
         ArrayList<Playlist> playlists = spotifyDAO.selectPlaylist();
         System.out.println("Lista de playlists:");
         for (Playlist p : playlists) {
@@ -89,7 +89,7 @@ public class Spotify {
         }
     }
 
-    private static void adicionarMusicaPlaylist(Scanner scanner, SpotifyDAO spotifyDAO) {
+    public static void adicionarMusicaPlaylist(Scanner scanner, SpotifyDAO spotifyDAO) {
         System.out.println("Insira o nome da música:");
         String nomeMusicaPlaylist = scanner.next();
         System.out.println("Insira o título da playlist:");
@@ -102,7 +102,7 @@ public class Spotify {
         }
     }
 
-    private static void removerMusicaPlaylist(Scanner scanner, SpotifyDAO spotifyDAO) {
+    public static void removerMusicaPlaylist(Scanner scanner, SpotifyDAO spotifyDAO) {
         System.out.println("Insira o nome da música:");
         String nomeMusicaRemover = scanner.next();
         System.out.println("Insira o título da playlist:");

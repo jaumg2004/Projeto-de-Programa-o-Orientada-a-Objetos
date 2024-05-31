@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import static org.example.Smartphone.DragonCity.DragonCity.*;
 import static org.example.Smartphone.Google.Google.*;
+import static org.example.Smartphone.Spotify.Spotify.*;
 import static org.example.Smartphone.Telefone.Telefone.*;
 
 public class Main {
