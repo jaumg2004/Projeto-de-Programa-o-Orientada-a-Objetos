@@ -23,9 +23,9 @@ public class Main {
 
         while (true) {
             System.out.println("Escolha uma opção:");
-            System.out.println("1. Interagir com Spotify");
-            System.out.println("2. Interagir com Telefone");
-            System.out.println("3. Interagir com Google");
+            System.out.println("1. Entrar no Spotify");
+            System.out.println("2. Entrar no Telefone");
+            System.out.println("3. Entrar no Google");
             System.out.println("4. Jogar Dragon City");
             System.out.println("5. Sair");
 
