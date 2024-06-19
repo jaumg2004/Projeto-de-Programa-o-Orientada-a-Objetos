@@ -56,8 +56,10 @@ public class Spotify {
     public static void atualizarReproducaoMusica(Scanner scanner, SpotifyDAO spotifyDAO) {
         System.out.println("Insira o nome da música que deseja atualizar:");
         String nomeMusicaAtualizar = scanner.next();
+        scanner.nextLine(); // Limpa o buffer do scanner
         System.out.println("Insira o novo número de reproduções:");
         int novaReproducao = scanner.nextInt();
+        scanner.nextLine(); // Limpa o buffer do scanner
         boolean atualizarSucesso = spotifyDAO.updateMusica(nomeMusicaAtualizar, novaReproducao);
         if (atualizarSucesso) {
             System.out.println("Reprodução da música atualizada com sucesso.");
@@ -65,6 +67,7 @@ public class Spotify {
             System.out.println("Falha ao atualizar reprodução da música.");
         }
     }
+
 
     public static void excluirMusica(Scanner scanner, SpotifyDAO spotifyDAO) {
         System.out.println("Insira o nome da música que deseja excluir:");

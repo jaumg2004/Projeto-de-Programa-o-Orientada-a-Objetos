@@ -35,26 +35,26 @@ public class SpotifyDAO extends ConnectionDAO {
     public boolean updateMusica(String nome, Integer novaReproducao) {
         connectToDB();
         String sql = "UPDATE Música SET Reprodução=? WHERE Nome=?";
-        boolean sucesso;
+        boolean sucesso = false;
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, nome);
-            pst.setInt(2, novaReproducao);
-            pst.execute();
+            pst.setInt(1, novaReproducao);
+            pst.setString(2, nome);
+            pst.executeUpdate(); // Use executeUpdate() para instruções de atualização
             sucesso = true;
         } catch (SQLException ex) {
             System.out.println("Erro: " + ex.getMessage());
-            sucesso = false;
         } finally {
             try {
-                con.close();
-                pst.close();
+                if (pst != null) pst.close();
+                if (con != null) con.close();
             } catch (SQLException ex) {
-                System.out.println("Erro: " + ex.getMessage());
+                System.out.println("Erro ao fechar conexão: " + ex.getMessage());
             }
         }
         return sucesso;
     }
+
 
     // DELETE
     public boolean deleteMusica(String nome) {
@@ -93,7 +93,7 @@ public class SpotifyDAO extends ConnectionDAO {
                 Musica musica = new Musica(
                         rs.getString("Nome"),
                         rs.getString("Artista"),
-                        rs.getInt("Tempo"),
+                        rs.getDouble("Tempo"),
                         rs.getInt("Reprodução")
                 );
                 musicas.add(musica);
