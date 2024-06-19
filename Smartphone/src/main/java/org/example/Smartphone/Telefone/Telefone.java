@@ -2,20 +2,24 @@ package org.example.Smartphone.Telefone;
 
 import org.example.DAO.TelefoneDAO;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Telefone {
-    public static void inserirChamada(TelefoneDAO telefoneDAO) {
-        Date dataHora = new Date(System.currentTimeMillis());
-        Chamada novaChamada = new Chamada(0, dataHora, 0);
+    public static int inserirChamada(TelefoneDAO telefoneDAO) {
+        Random random = new Random();
+        Timestamp horario = new Timestamp(System.currentTimeMillis());
+        int quantidadeLigacoes = random.nextInt(100);
+
+        Chamada novaChamada = new Chamada(0, horario, quantidadeLigacoes);
         boolean inseriuChamada = telefoneDAO.insertChamada(novaChamada);
+
         if (inseriuChamada) {
-            System.out.println("Chamada inserida com sucesso. ID: " + novaChamada.getIdChamadas());
+            return novaChamada.getIdChamadas();
         } else {
-            System.out.println("Falha ao inserir a chamada.");
+            return -1;
         }
     }
 
@@ -44,16 +48,23 @@ public class Telefone {
     }
 
     public static void inserirPessoa(Scanner scanner, TelefoneDAO telefoneDAO) {
-        Random random = new Random();
+
+        System.out.println("Nome do novo contato:");
         String nome = scanner.nextLine();
-        String numero = scanner.nextLine();
+        scanner.nextLine();
+        System.out.println("Numero do novo contato:");
+        String numero = scanner.nextLine();;
+        System.out.println("Email do novo contato:");
         String email = scanner.nextLine();
-        int chamada = random.nextInt()*10000000;
-        Pessoa novaPessoa = new Pessoa(nome, numero, email, chamada);
+
+        int chamadaId = inserirChamada(telefoneDAO);
+
+        Pessoa novaPessoa = new Pessoa(nome, numero, email, chamadaId);
         boolean inseriuPessoa = telefoneDAO.insertPessoa(novaPessoa);
+
         if (inseriuPessoa) {
             System.out.println("Pessoa inserida com sucesso.");
-            System.out.println("ID do novo contato: " + chamada);
+            System.out.println("ID do novo contato: " + chamadaId);
         } else {
             System.out.println("Falha ao inserir pessoa.");
         }

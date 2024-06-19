@@ -9,30 +9,39 @@ public class DragonCityDAO extends ConnectionDAO {
     public boolean insertDragonCity(String username, String senha) {
         connectToDB();
         Random random = new Random();
-        int idDragonCity = random.nextInt()*10000000;
-        System.out.println("Id da conta: "+idDragonCity);
-        String sql = "INSERT INTO sakila.`Dragon City` (idDragonCity, Username, Senha) VALUES (?, ?, ?)";
-        boolean sucesso;
+        int idDragonCity = random.nextInt(10000000); // Geração aleatória do ID
+        System.out.println("Id da conta: " + idDragonCity);
+
+        String sql = "INSERT INTO `DragonCity` (idDragonCity, Username, Senha) VALUES (?, ?, ?)";
+        boolean sucesso = false;
+
         try {
             pst = con.prepareStatement(sql);
             pst.setInt(1, idDragonCity);
             pst.setString(2, username);
             pst.setString(3, senha);
-            pst.execute();
+
+            pst.executeUpdate(); // Use executeUpdate() for INSERT statements
+
             sucesso = true;
         } catch (SQLException ex) {
             System.out.println("Erro: " + ex.getMessage());
-            sucesso = false;
         } finally {
             try {
-                con.close();
-                pst.close();
+                if (pst != null) {
+                    pst.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
             } catch (SQLException ex) {
-                System.out.println("Erro: " + ex.getMessage());
+                System.out.println("Erro ao fechar conexão: " + ex.getMessage());
             }
         }
+
         return sucesso;
     }
+
 
     // UPDATE na tabela Dragon City
     public boolean updateDragonCity(int idDragonCity, String newUsername, String newSenha) {
@@ -63,7 +72,7 @@ public class DragonCityDAO extends ConnectionDAO {
     // DELETE na tabela Dragon City
     public boolean deleteDragonCity(int idDragonCity) {
         connectToDB();
-        String sql = "DELETE FROM sakila.`Dragon City` WHERE idDragonCity = ?";
+        String sql = "DELETE FROM sakila.`DragonCity` WHERE idDragonCity = ?";
         boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
@@ -88,14 +97,14 @@ public class DragonCityDAO extends ConnectionDAO {
     public ArrayList<String[]> selectDragonCities() {
         ArrayList<String[]> dragonCityEntries = new ArrayList<>();
         connectToDB();
-        String sql = "SELECT * FROM sakila.`Dragon City`";
+        String sql = "SELECT * FROM sakila.`DragonCity`";
         boolean sucesso;
         try {
             st = con.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
                 String[] entry = new String[3];
-                entry[0] = String.valueOf(rs.getInt("idDragon City"));
+                entry[0] = String.valueOf(rs.getInt("idDragonCity"));
                 entry[1] = rs.getString("Username");
                 entry[2] = rs.getString("Senha");
                 dragonCityEntries.add(entry);
@@ -119,9 +128,9 @@ public class DragonCityDAO extends ConnectionDAO {
     public boolean insertIlha(String nomeIlha, int dragonCityId) {
         connectToDB();
         Random random = new Random();
-        int idIlha = random.nextInt()*10000000;
+        int idIlha = random.nextInt(10000000);
         System.out.println("Id da ilha: "+idIlha);
-        String sql = "INSERT INTO sakila.Ilhas (idIlhas, `Nome da ilha`, `Dragon City_idDragon City`) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO sakila.Ilhas (idIlhas, `Nome da ilha`, `DragonCity_idDragonCity`) VALUES (?, ?, ?)";
         boolean sucesso;
         try {
             pst = con.prepareStatement(sql);
@@ -181,7 +190,7 @@ public class DragonCityDAO extends ConnectionDAO {
                 String[] ilha = new String[3];
                 ilha[0] = String.valueOf(rs.getInt("idIlhas"));
                 ilha[1] = rs.getString("Nome da ilha");
-                ilha[2] = String.valueOf(rs.getInt("Dragon City_idDragon City"));
+                ilha[2] = String.valueOf(rs.getInt("DragonCity_idDragonCity"));
                 ilhas.add(ilha);
             }
             sucesso = true;

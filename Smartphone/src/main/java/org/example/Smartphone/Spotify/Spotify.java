@@ -3,18 +3,47 @@ package org.example.Smartphone.Spotify;
 import org.example.DAO.SpotifyDAO;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Spotify {
     public static void inserirMusica(Scanner scanner, SpotifyDAO spotifyDAO) {
         System.out.println("Insira o nome da música:");
         String nomeMusica = scanner.next();
+
         System.out.println("Insira o nome do artista:");
+        scanner.next(); // Limpar o buffer
         String artista = scanner.next();
-        System.out.println("Insira a duração da música em minutos:");
-        double duracao = scanner.nextDouble();
-        System.out.println("Insira o número de reproduções:");
-        int reproducao = scanner.nextInt();
+
+        double duracao = 0.0;
+        boolean entradaValida = false;
+        while (!entradaValida) {
+            try {
+                System.out.println("Insira a duração da música em minutos (0.01 a 999.99):");
+                duracao = scanner.nextDouble();
+                if (duracao <= 0 || duracao > 999.99) {
+                    throw new InputMismatchException("Duração fora do intervalo permitido.");
+                }
+                entradaValida = true; // A entrada é válida, sair do loop
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número válido dentro do intervalo permitido.");
+                scanner.next(); // Limpar a entrada inválida do scanner
+            }
+        }
+
+        int reproducao = 0;
+        entradaValida = false;
+        while (!entradaValida) {
+            try {
+                System.out.println("Insira o número de reproduções:");
+                reproducao = scanner.nextInt();
+                entradaValida = true; // A entrada é válida, sair do loop
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número inteiro válido.");
+                scanner.next(); // Limpar a entrada inválida do scanner
+            }
+        }
+
         Musica musica = new Musica(nomeMusica, artista, duracao, reproducao);
         boolean inserirSucesso = spotifyDAO.insertMusica(musica);
         if (inserirSucesso) {

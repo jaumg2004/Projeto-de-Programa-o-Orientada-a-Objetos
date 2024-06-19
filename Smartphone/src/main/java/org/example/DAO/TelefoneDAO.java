@@ -72,7 +72,7 @@ public class TelefoneDAO extends ConnectionDAO {
     // INSERT Pessoa
     public boolean insertPessoa(Pessoa pessoa) {
         connectToDB();
-        String sql = "INSERT INTO Pessoa (Nome, Numero, Email, Chamadas_idChamadas) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Pessoa (Nome, Número, Email, Chamadas_idChamadas) VALUES (?, ?, ?, ?)";
         boolean sucesso;
         try {
             pst = con.prepareStatement(sql);

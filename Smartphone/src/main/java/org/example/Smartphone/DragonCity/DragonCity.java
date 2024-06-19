@@ -3,13 +3,15 @@ package org.example.Smartphone.DragonCity;
 import org.example.DAO.DragonCityDAO;
 
 import java.util.ArrayList;
-import java.util.Random;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DragonCity {
     public static void criarNovaConta(Scanner scanner, DragonCityDAO dragonCityDAO) {
         System.out.println("Digite o nome de usuário:");
         String username = scanner.next();
+        scanner.next();
         System.out.println("Digite a senha:");
         String senha = scanner.next();
 
@@ -48,12 +50,22 @@ public class DragonCity {
     }
 
     public static void comprarNovaIlha(Scanner scanner, DragonCityDAO dragonCityDAO) {
-        System.out.println("Digite o nome da nova ilha:");
-        String nomeIlha = scanner.next();
-        System.out.println("Digite o ID da conta para qual a ilha será comprada:");
-        int idConta = scanner.nextInt();
-        dragonCityDAO.insertIlha(nomeIlha, idConta);
+        try {
+            System.out.println("Digite o nome da nova ilha:");
+            String nomeIlha = scanner.nextLine(); // Usar nextLine() para ler toda a linha, se necessário
+            scanner.nextLine(); // Limpar o buffer do scanner após nextInt()
+            System.out.println("Digite o ID da conta para qual a ilha será comprada:");
+            int idConta = scanner.nextInt();
+
+            dragonCityDAO.insertIlha(nomeIlha, idConta);
+
+        } catch (InputMismatchException e) {
+            System.out.println("Erro: Entrada inválida. Certifique-se de digitar um número inteiro para o ID da conta.");
+            scanner.nextLine(); // Limpa o buffer do scanner
+        }
     }
+
+
 
     public static void venderIlha(Scanner scanner, DragonCityDAO dragonCityDAO) {
         System.out.println("Digite o ID da ilha que deseja vender:");

@@ -93,7 +93,7 @@ public class SpotifyDAO extends ConnectionDAO {
                 Musica musica = new Musica(
                         rs.getString("Nome"),
                         rs.getString("Artista"),
-                        rs.getDouble("Tempo"),
+                        rs.getInt("Tempo"),
                         rs.getInt("Reprodução")
                 );
                 musicas.add(musica);
