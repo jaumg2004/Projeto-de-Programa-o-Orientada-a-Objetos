@@ -12,9 +12,13 @@ public class Telefone {
         Random random = new Random();
         Timestamp horario = new Timestamp(System.currentTimeMillis());
         int quantidadeLigacoes = random.nextInt(100);
+        int idChamadas = random.nextInt(100000);
 
-        Chamada novaChamada = new Chamada(0, horario, quantidadeLigacoes);
+        Chamada novaChamada = new Chamada(idChamadas, horario, quantidadeLigacoes);
         boolean inseriuChamada = telefoneDAO.insertChamada(novaChamada);
+
+        System.out.println("Ligação feita");
+        System.out.println("ID da chamada: " + novaChamada.getIdChamadas());
 
         if (inseriuChamada) {
             return novaChamada.getIdChamadas();
