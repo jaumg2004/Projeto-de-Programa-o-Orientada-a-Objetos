@@ -14,6 +14,8 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema sakila
 -- -----------------------------------------------------
+DROP database if exists sakila;
+
 CREATE SCHEMA IF NOT EXISTS `sakila` ;
 USE `sakila` ;
 
@@ -53,7 +55,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `sakila`.`Música` (
   `Nome` VARCHAR(45) NOT NULL,
   `Artista` VARCHAR(45) NULL,
-  `Tempo` DECIMAL(2) NULL,
+  `Tempo` DECIMAL(5,2) NULL,
   `Reprodução` INT NULL,
   PRIMARY KEY (`Nome`))
 ENGINE = InnoDB;
@@ -127,11 +129,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `sakila`.`Dragon City`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sakila`.`Dragon City` (
-  `idDragon City` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `sakila`.`DragonCity` (
+  `idDragonCity` INT NOT NULL,
   `Username` VARCHAR(45) NULL,
   `Senha` VARCHAR(45) NULL,
-  PRIMARY KEY (`idDragon City`))
+  PRIMARY KEY (`idDragonCity`))
 ENGINE = InnoDB;
 
 
@@ -141,12 +143,12 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `sakila`.`Ilhas` (
   `idIlhas` INT NOT NULL,
   `Nome da ilha` VARCHAR(45) NULL,
-  `Dragon City_idDragon City` INT NOT NULL,
-  PRIMARY KEY (`idIlhas`, `Dragon City_idDragon City`),
-  INDEX `fk_Ilhas_Dragon City1_idx` (`Dragon City_idDragon City` ASC),
-  CONSTRAINT `fk_Ilhas_Dragon City1`
-    FOREIGN KEY (`Dragon City_idDragon City`)
-    REFERENCES `sakila`.`Dragon City` (`idDragon City`)
+  `DragonCity_idDragonCity` INT NOT NULL,
+  PRIMARY KEY (`idIlhas`, `DragonCity_idDragonCity`),
+  INDEX `fk_Ilhas_DragonCity1_idx` (`DragonCity_idDragonCity` ASC),
+  CONSTRAINT `fk_Ilhas_DragonCity1`
+    FOREIGN KEY (`DragonCity_idDragonCity`)
+    REFERENCES `sakila`.`DragonCity` (`idDragonCity`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -210,11 +212,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `sakila`.`Tipo_has_Dragões` (
   `Dragões_nomeDragões` INT NOT NULL,
   `Tipo_Tipo` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Dragões_nomeDragões`, `Tipo_Tipo`),
+  PRIMARY KEY (`Dragões_idDragões`, `Tipo_Tipo`),
   INDEX `fk_Tipo_has_Dragões_Dragões1_idx` (`Dragões_idDragões` ASC),
   INDEX `fk_Tipo_has_Dragões_Tipo1_idx` (`Tipo_Tipo` ASC),
   CONSTRAINT `fk_Tipo_has_Dragões_Dragões1`
-    FOREIGN KEY (`Dragões_nomeDragões`)
+    FOREIGN KEY (`Dragões_idDragões`)
     REFERENCES `sakila`.`Dragões` (`Nome`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
